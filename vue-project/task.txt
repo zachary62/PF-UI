@@ -1,4 +1,4 @@
-Project Requirements (Text Version)
+Project Requirements
 
 First View
 A ChatGPT-like interface where the user can type a question into a single input box.
@@ -23,9 +23,5 @@ b. page preview
 
 Right Panel: A chat section that can be minimized or expanded, with draggable borders for resizing.
 Focus on a modern, minimalistic design, with clear separation of panels and smooth transitions when resizing.
-
-
-
-
 
 
