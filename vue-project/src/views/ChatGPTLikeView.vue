@@ -1,54 +1,48 @@
 <template>
-    <div class="flex flex-col min-h-screen bg-gray-50">
-      <!-- Top area (Header placeholder?) -->
-      <header class="h-16 flex items-center justify-center border-b border-gray-200">
-        <!-- You can place a simple brand name or Apple-like minimal menu, if desired -->
-        <h1 class="text-lg font-semibold text-gray-700">
-          ChatGPT-Like Interface
-        </h1>
-      </header>
+    <!-- Full viewport with subtle gradient background -->
+    <div
+      class="min-h-screen flex flex-col items-center justify-center py-8 px-4
+             bg-gradient-to-br from-gray-50 via-slate-100 to-slate-200"
+    >
+      <!-- Large heading (no box) -->
+      <h1 class="text-5xl font-bold text-gray-800 mb-4">
+        What AI system do you want to build?
+      </h1>
   
-      <!-- Main content wrapper -->
-      <main class="flex-grow flex items-center justify-center p-4">
-        <div class="w-full max-w-xl bg-white rounded-xl shadow-lg p-6">
-          <h2 class="text-2xl font-bold text-gray-800 mb-3">
-            What do you want to build?
-          </h2>
-          <p class="text-gray-500 mb-6">
-            Enter your question or idea below.
-          </p>
+      <!-- Sub-heading (no box) -->
+      <p class="text-2xl text-gray-600 mb-10">
+        Design, build, test, and deploy your AI systems, with AI
+      </p>
   
-          <div class="flex flex-col space-y-4">
-            <textarea
-              v-model="userQuestion"
-              placeholder="Start typing your idea or question..."
-              class="p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              rows="5"
-              @keyup.enter="submitQuestion"
-            ></textarea>
+      <!-- Single box for input & button -->
+      <div class="w-full max-w-3xl p-6 bg-white border border-gray-200 rounded-md shadow-md">
+        <!-- Text area -->
+        <textarea
+          v-model="userQuestion"
+          placeholder="Share your idea or question..."
+          class="w-full h-48 p-4 mb-4 border border-gray-300 rounded-md resize-none
+                 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        ></textarea>
   
-            <button
-              @click="submitQuestion"
-              class="self-end px-5 py-2.5 rounded-md bg-gray-800 text-white font-medium 
-                     hover:bg-gray-700 active:scale-[0.97] transition-transform"
-            >
-              Submit
-            </button>
-          </div>
+        <!-- Submit button -->
+        <div class="flex justify-end">
+          <button
+            @click="submitQuestion"
+            class="px-6 py-3 bg-gray-800 text-white font-medium
+                   rounded-md hover:bg-gray-700 active:scale-[0.97]
+                   transition-transform"
+          >
+            Submit
+          </button>
         </div>
-      </main>
-  
-      <!-- Footer (optional) -->
-      <footer class="h-16 flex items-center justify-center border-t border-gray-200 text-sm text-gray-400">
-        © 2025 My Company
-      </footer>
+      </div>
     </div>
   </template>
   
   <script setup lang="ts">
   import { ref } from 'vue'
   
-  const userQuestion = ref<string>('')
+  const userQuestion = ref('')
   
   function submitQuestion() {
     if (!userQuestion.value.trim()) return
@@ -59,8 +53,7 @@
   
   <style scoped>
   /*
-    Scoped style for extremely custom overrides if needed.
-    Otherwise, rely on Tailwind classes for the majority of design.
+    Minimal custom overrides; main styling provided by Tailwind classes.
   */
   </style>
   
