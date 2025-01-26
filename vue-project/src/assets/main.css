@@ -4,9 +4,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'splitpanes/dist/splitpanes.css';
 
 /* Add this reusable class for the gradient background */
 .main-gradient-bg {
   @apply min-h-screen flex flex-col
          bg-gradient-to-br from-gray-50 via-slate-100 to-slate-200;
+}
+
+/* Make the draggable bar more visible */
+.splitpanes__horizontal {
+  cursor: row-resize;
+}
+
+.splitpanes__vertical {
+  cursor: col-resize;
+}
+
+/* Customize the handle color/size if you like */
+.splitpanes__resize-handle {
+  background-color: rgba(120, 120, 120, 0.3);
 }

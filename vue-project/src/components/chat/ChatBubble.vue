@@ -1,12 +1,11 @@
 <!-- File: /src/components/chat/ChatBubble.vue -->
 <template>
     <!-- 
-      - We have two different bubble styles:
-        - user => darker gray, right-aligned
-        - assistant => lighter gray, left-aligned
+      - Add text-sm for smaller text
+      - The bubble alignment logic remains
     -->
     <div
-      class="max-w-[60%] p-3 rounded-md break-words"
+      class="max-w-[60%] p-3 rounded-md break-words text-sm"
       :class="role === 'user'
         ? 'bg-gray-700 text-white self-end ml-auto'
         : 'bg-gray-200 text-gray-800 self-start mr-auto'"
@@ -25,8 +24,4 @@
   
   const props = defineProps<Props>()
   </script>
-  
-  <style scoped>
-  /* Rely mainly on Tailwind classes above for appearance. */
-  </style>
   
