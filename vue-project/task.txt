@@ -2,7 +2,6 @@ Project Requirements
 
 First View
 A ChatGPT-like interface where the user can type a question into a single input box.
-Displays a simulated AI response beneath the input, in a conversational style.
 
 Second View
 A chat-focused screen displaying the user’s messages and AI replies in a threaded format.
