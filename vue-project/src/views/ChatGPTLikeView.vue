@@ -1,26 +1,47 @@
 <template>
-    <div class="chatgpt-like-view">
-      <div class="gradient-background">
-        <div class="centered-container">
-          <div class="card">
-            <h1 class="title">What do you want to build?</h1>
-            <p class="subtitle">
-              Enter your question below. (Answers will appear in the Chat Thread.)
-            </p>
+    <div class="flex flex-col min-h-screen bg-gray-50">
+      <!-- Top area (Header placeholder?) -->
+      <header class="h-16 flex items-center justify-center border-b border-gray-200">
+        <!-- You can place a simple brand name or Apple-like minimal menu, if desired -->
+        <h1 class="text-lg font-semibold text-gray-700">
+          ChatGPT-Like Interface
+        </h1>
+      </header>
   
-            <div class="input-wrapper">
-              <textarea
-                v-model="userQuestion"
-                placeholder="Start typing your idea or question..."
-                @keyup.enter="submitQuestion"
-              ></textarea>
-              <button @click="submitQuestion">
-                Submit
-              </button>
-            </div>
+      <!-- Main content wrapper -->
+      <main class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-xl bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-3">
+            What do you want to build?
+          </h2>
+          <p class="text-gray-500 mb-6">
+            Enter your question or idea below.
+          </p>
+  
+          <div class="flex flex-col space-y-4">
+            <textarea
+              v-model="userQuestion"
+              placeholder="Start typing your idea or question..."
+              class="p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              rows="5"
+              @keyup.enter="submitQuestion"
+            ></textarea>
+  
+            <button
+              @click="submitQuestion"
+              class="self-end px-5 py-2.5 rounded-md bg-gray-800 text-white font-medium 
+                     hover:bg-gray-700 active:scale-[0.97] transition-transform"
+            >
+              Submit
+            </button>
           </div>
         </div>
-      </div>
+      </main>
+  
+      <!-- Footer (optional) -->
+      <footer class="h-16 flex items-center justify-center border-t border-gray-200 text-sm text-gray-400">
+        © 2025 My Company
+      </footer>
     </div>
   </template>
   
@@ -36,145 +57,10 @@
   }
   </script>
   
-  <style>
-  /* GLOBAL RESET (or place in your main.css) */
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-  
-  /* 
-     ----------------------------------------------------------
-     LAYOUT & BACKGROUND
-     ----------------------------------------------------------
+  <style scoped>
+  /*
+    Scoped style for extremely custom overrides if needed.
+    Otherwise, rely on Tailwind classes for the majority of design.
   */
-  .chatgpt-like-view,
-  .gradient-background {
-    height: 100vh; /* Full viewport height */
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* A nice diagonal gradient. Adjust angles/colors as you like. */
-  .gradient-background {
-    background: linear-gradient(
-      135deg,
-      #4e79ff 0%,
-      #1ac7c2 100%
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Center container */
-  .centered-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-  }
-  
-  /* 
-     ----------------------------------------------------------
-     CARD
-     ----------------------------------------------------------
-  */
-  .card {
-    /* Remove any max-width if you want it truly large */
-    width: 80%; 
-    /* Or 100% if you want it to stretch fully. Adjust to taste. */
-  
-    background: #fff;
-    border-radius: 1rem;
-    padding: 3rem 3rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    min-height: 400px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .title {
-    margin: 0 0 1rem;
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: #333;
-  }
-  
-  .subtitle {
-    margin: 0 0 2rem;
-    font-size: 1.2rem;
-    color: #666;
-    line-height: 1.6;
-  }
-  
-  /* 
-     ----------------------------------------------------------
-     INPUT + BUTTON
-     ----------------------------------------------------------
-  */
-  .input-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-  
-  .input-wrapper textarea {
-    width: 100%;
-    min-height: 150px;
-    resize: vertical;
-    font-size: 1.1rem;
-    padding: 1rem;
-    border: 1px solid #dcdcdc;
-    border-radius: 0.75rem;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-  
-  .input-wrapper textarea:focus {
-    border-color: #4e79ff;
-  }
-  
-  .input-wrapper button {
-    background-color: #4e79ff;
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 0.85rem 1.75rem;
-    border: none;
-    border-radius: 0.75rem;
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.3s, transform 0.1s;
-  }
-  
-  .input-wrapper button:hover {
-    background-color: #3a5fd1;
-  }
-  
-  .input-wrapper button:active {
-    transform: scale(0.98);
-  }
-  
-  /* 
-     ----------------------------------------------------------
-     RESPONSIVENESS
-     ----------------------------------------------------------
-  */
-  @media (max-width: 768px) {
-    .card {
-      width: 90%;
-      padding: 2rem;
-    }
-  
-    .title {
-      font-size: 1.8rem;
-    }
-  }
   </style>
   
