@@ -1,145 +1,91 @@
-<!-- File: /src/layouts/VSCodeLayout.vue -->
 <template>
-    <div class="main-gradient-bg h-screen w-full flex overflow-hidden">
-      <!-- We wrap everything in a container that uses 
-           the same gradient background as the other views. -->
+    <!-- Full-height flex layout with no scrollbars -->
+    <div class="main-gradient-bg h-screen w-full flex flex-col overflow-hidden">
+      <!-- Header -->
+      <header class="flex items-center justify-between p-3 bg-white/80 border-b border-gray-300 shadow-sm backdrop-blur-md shrink-0">
+        <!-- Left side: Editor/Preview buttons -->
+        <div class="flex items-center gap-3">
+          <button :class="tabButtonClass('editor')" @click="currentTab = 'editor'">Editor</button>
+          <button :class="tabButtonClass('preview')" @click="currentTab = 'preview'">Preview</button>
+        </div>
+        <!-- Right side: Toggle for chat -->
+        <button class="px-4 py-2 rounded text-gray-700 hover:bg-gray-200 border border-transparent active:scale-[0.97] transition-transform flex items-center gap-2" @click="toggleChat">
+          <span v-if="hideChat">Show Chat</span>
+          <span v-else>Hide Chat</span>
+          <span v-if="hideChat">«</span>
+          <span v-else>»</span>
+        </button>
+      </header>
   
-      <!-- Outer split: Left section vs. Right chat panel -->
-      <splitpanes 
-        class="default-theme w-full h-full" 
-        v-if="!hideChat"
-      >
-        <!-- LEFT PANE (code or preview) -->
-        <pane :size="80">
-          <div class="flex flex-col w-full h-full">
-            <!-- The top bar with editor/preview toggles -->
-            <div class="flex items-center justify-between p-2 bg-gray-100 border-b border-gray-300">
-              <!-- Toggle Buttons -->
-              <div class="flex gap-2">
-                <button 
-                  :class="tabButtonClass('editor')" 
-                  @click="currentTab = 'editor'"
-                >
-                  Editor
-                </button>
-                <button 
-                  :class="tabButtonClass('preview')" 
-                  @click="currentTab = 'preview'"
-                >
-                  Preview
-                </button>
-              </div>
-  
-              <!-- Hide Chat button (only if chat is visible) -->
-              <button 
-                class="px-3 py-1 text-gray-600 hover:bg-gray-200 rounded"
-                @click="hideChat = true"
-              >
-                Hide Chat
-              </button>
-            </div>
-  
-            <div class="flex-grow flex relative">
-              <!-- If "editor" tab is active, show directory tree + code editor + console -->
+      <!-- Main content area -->
+      <main class="flex-1 min-h-0 overflow-hidden">
+        <!-- If chat is visible, show a two-pane layout (left + chat). -->
+        <splitpanes v-if="!hideChat" class="default-theme w-full h-full">
+          <!-- LEFT PANE: Editor or Preview -->
+          <pane :size="70" :min-size="50">
+            <div class="w-full h-full flex flex-col">
               <template v-if="currentTab === 'editor'">
-                <!-- Split: left half is DirectoryTree, right half is CodeEditor + Console -->
-                <splitpanes 
-                  class="default-theme w-full"
-                  :horizontal="false"
-                  :pushOtherPane="true"
-                  :minSize="100"
-                  :dividerSize="4"
-                >
-                  <pane :size="25">
+                <!-- Vertical split for Directory vs. Editor+Console -->
+                <splitpanes class="default-theme w-full h-full" :horizontal="false" :push-other-pane="true" :min-size="100" :divider-size="4">
+                  <!-- Directory Tree -->
+                  <pane :size="25" :min-size="10">
                     <DirectoryTree class="w-full h-full" />
                   </pane>
-                  <pane :size="75">
-                    <!-- Another vertical split for Editor (top) and Console (bottom) -->
-                    <splitpanes 
-                      class="default-theme w-full h-full"
-                      :horizontal="true"
-                      :pushOtherPane="true"
-                      :minSize="80"
-                      :dividerSize="4"
-                    >
-                      <pane :size="70">
+                  <!-- Editor + Console (horizontal split) -->
+                  <pane :size="75" :min-size="50">
+                    <splitpanes class="default-theme w-full h-full" :horizontal="true" :push-other-pane="true" :min-size="80" :divider-size="4">
+                      <!-- Code editor -->
+                      <pane :size="70" :min-size="25">
                         <CodeEditor class="w-full h-full" />
                       </pane>
-                      <pane :size="30">
+                      <!-- Console -->
+                      <pane :size="30" :min-size="10">
                         <ConsolePanel class="w-full h-full" />
                       </pane>
                     </splitpanes>
                   </pane>
                 </splitpanes>
               </template>
-  
-              <!-- If "preview" tab is active, show PagePreview in full space -->
+              <!-- If user selected "preview" -->
               <template v-else>
                 <PagePreview class="w-full h-full" />
               </template>
             </div>
-          </div>
-        </pane>
+          </pane>
+          <!-- RIGHT PANE: Chat Panel -->
+          <pane :size="30" :min-size="20">
+            <ChatPanel />
+          </pane>
+        </splitpanes>
   
-        <!-- RIGHT PANE: Chat Panel -->
-        <pane :size="20">
-          <!-- 
-            The ChatPanel is in its own split pane to the right.
-            Still uses the same "default-theme" from the outer <splitpanes>.
-          -->
-          <ChatPanel />
-        </pane>
-      </splitpanes>
-  
-      <!-- If user hides chat, show only the left portion in full width -->
-      <div v-else class="flex flex-col w-full h-full">
-        <div class="flex items-center justify-end p-2 bg-gray-100 border-b border-gray-300">
-          <button
-            class="px-3 py-1 text-gray-600 hover:bg-gray-200 rounded"
-            @click="hideChat = false"
-          >
-            Show Chat
-          </button>
-        </div>
-  
-        <div class="flex-grow">
-          <!-- Same toggling logic if user wants Editor vs. Preview,
-               but with no pane to the right. -->
+        <!-- If chat is hidden, we only show the left side in full width. -->
+        <div v-else class="w-full h-full">
+          <!-- Editor vs Preview layout -->
           <template v-if="currentTab === 'editor'">
-            <splitpanes 
-              class="default-theme w-full h-full"
-              :horizontal="false"
-              :pushOtherPane="true"
-              :minSize="100"
-              :dividerSize="4"
-            >
-              <pane :size="25">
+            <!-- Directory + Editor/Console in a vertical split -->
+            <splitpanes class="default-theme w-full h-full" :horizontal="false" :push-other-pane="true" :min-size="100" :divider-size="4">
+              <!-- Directory Tree -->
+              <pane :size="25" :min-size="10">
                 <DirectoryTree class="w-full h-full" />
               </pane>
-              <pane :size="75">
-                <splitpanes 
-                  class="default-theme w-full h-full"
-                  :horizontal="true"
-                  :pushOtherPane="true"
-                  :minSize="80"
-                  :dividerSize="4"
-                >
-                  <pane :size="70">
+              <!-- Editor + Console horizontally -->
+              <pane :size="75" :min-size="50">
+                <splitpanes class="default-theme w-full h-full" :horizontal="true" :push-other-pane="true" :min-size="80" :divider-size="4">
+                  <pane :size="70" :min-size="25">
                     <CodeEditor class="w-full h-full" />
                   </pane>
-                  <pane :size="30">
+                  <pane :size="30" :min-size="10">
                     <ConsolePanel class="w-full h-full" />
                   </pane>
                 </splitpanes>
               </pane>
             </splitpanes>
           </template>
-  
           <template v-else>
             <PagePreview class="w-full h-full" />
           </template>
         </div>
-      </div>
+      </main>
     </div>
   </template>
   
@@ -154,24 +100,31 @@
   import ConsolePanel from '@/components/vsCodeLayout/ConsolePanel.vue'
   import ChatPanel from '@/components/vsCodeLayout/ChatPanel.vue'
   
+  // Which tab is active: "editor" or "preview".
   const currentTab = ref<'editor' | 'preview'>('editor')
+  
+  // Whether to hide (collapse) the chat panel on the right.
   const hideChat = ref(false)
   
-  // Utility for button classes to highlight the active tab
+  // Toggle the chat display.
+  function toggleChat() {
+    hideChat.value = !hideChat.value
+  }
+  
+  // Utility for toggling Editor/Preview button classes.
   function tabButtonClass(tab: 'editor' | 'preview') {
-    return [
-      'px-4',
-      'py-2',
-      'rounded',
-      'text-gray-700',
-      currentTab.value === tab 
-        ? 'bg-white border border-gray-300' 
-        : 'hover:bg-gray-200',
-    ].join(' ')
+    const base =
+      'px-4 py-2 rounded text-gray-700 border border-transparent ' +
+      'hover:bg-gray-200 active:scale-[0.97] transition-transform'
+    return currentTab.value === tab
+      ? `${base} bg-gray-200`
+      : base
   }
   </script>
   
   <style scoped>
-  /* Tailwind handles most of our styling. */
+  .default-theme {
+    /* Baseline styling for the Splitpanes theme. */
+  }
   </style>
   
