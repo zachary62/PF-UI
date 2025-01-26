@@ -8,8 +8,10 @@ A chat-focused screen displaying the user’s messages and AI replies in a threa
 Emulates a typical messaging interface: user messages on one side, AI responses on the other.
 
 Third View
-A VS Code-like layout featuring:
-Left Panel: 
+A VS Code-like layout with draggable borders for resizing
+
+Featuring:
+1. Left Panel: 
 Toggle between code editor and page preview:
 
 a. Code editor
@@ -20,7 +22,8 @@ a. Code editor
 b. page preview
    Start with a dummy render of html 
 
-Right Panel: A chat section that can be minimized or expanded, with draggable borders for resizing.
+2. Right Panel: A chat section that can be minimized or expanded. Reuse the chat interface from Second View.
+
 Focus on a modern, minimalistic design, with clear separation of panels and smooth transitions when resizing.
 
 

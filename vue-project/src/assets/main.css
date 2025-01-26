@@ -1,3 +1,12 @@
+/* File: /src/assets/main.css */
+
+/* Existing Tailwind imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Add this reusable class for the gradient background */
+.main-gradient-bg {
+  @apply min-h-screen flex flex-col
+         bg-gradient-to-br from-gray-50 via-slate-100 to-slate-200;
+}
