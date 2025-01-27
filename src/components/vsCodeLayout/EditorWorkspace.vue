@@ -7,7 +7,7 @@
       </pane>
   
       <!-- Right Pane - Editor + Console -->
-      <pane :size="75">
+      <pane :size="75" :min-size="60">
         <splitpanes horizontal>
           <pane :size="70" :min-size="25">
             <CodeEditor class="w-full h-full" />

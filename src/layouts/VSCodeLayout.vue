@@ -22,7 +22,7 @@
     <main class="flex-1 min-h-0 overflow-hidden">
       <splitpanes v-if="!hideChat" class="default-theme w-full h-full">
         <!-- Main Content Area -->
-        <pane :size="currentTab === 'preview' ? 80 : 80" :min-size="currentTab === 'preview' ? 80 : 40">
+        <pane :size="currentTab === 'preview' ? 60 : 60" :min-size="currentTab === 'preview' ? 40 : 40">
           <component 
             :is="currentTab === 'editor' ? EditorWorkspace : PagePreview" 
             class="w-full h-full"
@@ -30,7 +30,7 @@
         </pane>
         
         <!-- Chat Panel -->
-        <pane :size="20" :min-size="30">
+        <pane :size="40" :min-size="20">
           <ChatPanel />
         </pane>
       </splitpanes>
